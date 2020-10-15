@@ -1,0 +1,130 @@
+#include <iostream>
+using namespace std;
+class Punkt
+{
+    int x;
+    int y;
+public:
+    Punkt(int x_ = 0, int y_ = 0)
+    {
+        x = x_;
+        y = y_;
+    }
+
+    void dodaj(Punkt* p)
+    {
+        x += p->x;
+        y += p->y;
+    }
+    void dodaj(Punkt& p)
+    {
+        x += p.x;
+        y += p.y;
+    }
+
+    void dodaj(int x_, int y_)
+    {
+        x += x_;
+        y += y_;
+    }
+    void drukuj()
+    {
+        cout << "Suma iksow wynosi: " << x << endl;
+        cout << "Suma y wynosi: " << y << endl;
+    }
+    bool porownanie(Punkt& p0, Punkt& p1)
+    {
+        if (p0.x != p1.x)
+        {
+            return false;
+        };
+        if (p0.y != p0.y)
+        {
+            return false;
+        };
+        return true;
+    }
+};
+
+
+class Tablica {
+    Punkt* a;
+    int dlugosc;
+public:
+    Tablica(int dl = 0) {
+        dlugosc = dl;
+        a = new Punkt[dl];
+        for (int i = 0; i < dl; i++) {
+            a[i] = Punkt(0, 0);
+        }
+    }
+    Tablica(Tablica& tab) {
+        a = tab.a;
+        dlugosc = tab.dlugosc;
+    }
+    Tablica(float* x, float* y, int dl) {
+        dlugosc = dl;
+        a = new Punkt[dl];
+        for (int i = 0; i < dl; i++) {
+            a[i] = Punkt(x[i], y[i]);
+        }
+    }
+
+    void dodaj(Tablica& a_) {
+        int licznik;
+        if (a_.dlugosc > dlugosc) {
+            licznik = dlugosc;
+        }
+        else {
+            licznik = a_.dlugosc;
+        }
+        for (int i = 0; i < licznik; i++) {
+            a[i].dodaj(a_.a[i]);
+        }
+    }
+
+    void drukuj() {
+        cout << dlugosc << endl;
+        for (int i = 0; i < dlugosc; i++) {
+            a[0].drukuj();
+        }
+    }
+
+
+    bool porownaj(Tablica& a_) {
+        bool sprawdz = false;
+        if (a_.dlugosc != dlugosc) {
+            return sprawdz;
+        }
+        for (int i = 0; i < a_.dlugosc; i++) {
+            int sprawdzPunkt = a[i].sprawdzPunkt(a[i], a_.a[i]);
+            if (sprawdzPunkt == 0) {
+                return sprawdzPunkt;
+            };
+        }
+        sprawdz = true;
+        return sprawdz;
+    }
+
+};
+
+int main()
+{
+    Punkt pierwszy(20, 10);
+    Punkt drugi(5, 15);
+    int* tablica = new int[2];
+    int* tablica1 = new int[2];
+    tablica[0] = 1;
+    tablica1[1] = 2;
+    tablica[0] = 3;
+    tablica1[1] = 4;
+
+    Tablica tablicaA(tablica, tablica1, 3);
+    Tablica tablicaB(tablica, tablica1, 4);
+    tablicaA.drukuj();
+    bool porownanie = tablicaA.porownaj(tablica);
+    cout << porownanie << endl;
+    tablica.dodaj(tablica1);
+    tablica.drukuj();
+
+}
