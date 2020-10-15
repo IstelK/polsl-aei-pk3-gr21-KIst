@@ -1,0 +1,226 @@
+/*Dla klasy Punkt(poprzednie zadanie) zdefiniowaać operatory :
+1) += (działa jak dodaj(Punkt & p)
+    2) =
+    3) ==
+    4) + umożliwia operację a = b + c(do punktu a dodaje sume 2 punktów);
+5) operator strumieniowy drukujący na ekranie punkt(odpowiednik drukuj()
+    Dla klasy Tablica zdefiniowaać operatory :
+1) = (Używając this zapiobiec operacji typu a = a(kopiowanie samego siebie);
+czy dla klasy Tablica można użyć opertaora = bez jego definiowania, czy program będzie wtedy działał prawidłowo ?
+2) == (działa jak porownaj(&w))
+3) operator strumieniowy drukujący na ekranie punkt(odpowiednik drukuj())
+4) operator +=
+5) operator [] umozliwiający odczytywanie i modyfikowannie i - tego elementu wektora
+zdefiniować dla klasy wektor konstruktor umożliwiający czytanie danych z pliku tekstowego
+UWAGA :
+Wszystkie operatory i metody nalęzy przetestować w programie main.Klasa Tablica korzysta z operatorów klasy Punkt.
+
+
+
+#include <iostream>
+#include <string>
+
+bool Punkt::porownaj(Punkt &p)
+{
+    if (x == p.x) && (y == p.y)
+    {
+        return true;
+    }
+    else return false;
+}
+operator x;
+operator new;
+
+bool operator=(Punkt& p)
+{
+    return(this->porownaj(p));
+}
+int main()
+{
+
+    Punkt A(2, 3);
+    Punkt B(3, 4);
+    if A.porownaj(B);
+    /* float x;
+    string s;
+    cout << x << y;
+    Matrix A{ "dane.txt" };
+    Matrix B{ A };
+    Matrix C;
+
+    C = A * B; // A.operator*.(B);
+    string s("hhh");
+*/
+
+#include <iostream>
+using namespace std;
+
+class Punkt {
+    int x;
+    int y;
+public:
+    Punkt(Punkt& p) {
+        x = p.x;
+        y = p.y;
+    }
+    Punkt(float x1 = 0, float y1 = 0) {
+        x = x1;
+        y = y1;
+    }
+
+
+    void operator+=(Punkt& punkt) {
+        x = this->x + punkt.x;
+        y = this->y + punkt.y;
+    }
+
+    bool operator==(Punkt& punkt) 
+    {
+        if (this->x != punkt.x)
+            { 
+            return false;
+            };
+        if (this->y != punkt.y)
+            { 
+            return false; 
+            };
+            return true;
+    }
+    Punkt operator+(Punkt& punkt) 
+    {
+        Punkt punktToReturn;
+        punktToReturn.x = this->x + punkt.x;
+        punktToReturn.y = this->y + punkt.y;
+        return punktToReturn;
+    }
+    friend ostream& operator<< (ostream& output, const Punkt& Punkt)
+    {
+        return output << "X coordinates " << Punkt.x << " Y coordinates " << Punkt.y << '\n';
+    }
+};
+class Tablica 
+{
+    Punkt* w;
+    int lenght;;
+public:
+    Tablica(int dl = 0) 
+    {
+        lenght = dl;
+        w = new Punkt[dl];
+        for (int i = 0; i < dl; i++) 
+        {
+            w[i] = Punkt(0, 0);
+        }
+    }
+    Tablica(Tablica& tab) 
+    {
+        w = tab.w;
+        lenght = tab.lenght;
+    }
+    Tablica(float* x, float* y, int dl)
+    {
+        lenght = dl;
+        w = new Punkt[dl];
+        for (int i = 0; i < dl; i++) 
+        {
+            w[i] = Punkt(x[i], y[i]);
+        }
+    }
+    Tablica operator=(Tablica& array) 
+    {
+        bool isEqual = this->porownaj(array);
+        if (isEqual) {
+            return *this;
+        }
+        for (int i = 0; i < array.lenght; i++) 
+        {
+            this->w[i] = array.w[i];
+        }
+        return *this;
+    }
+    bool operator==(Tablica& array)
+    {
+        return this->porownaj(array);
+    }
+    void operator+=(Tablica& Tablica)
+    {
+        int lenghtToUse;
+        if (lenght < Tablica.lenght) 
+        {
+            lenghtToUse = lenght;
+        }
+        else {
+            lenghtToUse = Tablica.lenght;
+        }
+        for (int i = 0; i < lenghtToUse; i++)
+        {
+            w[i] += Tablica.w[i];
+        }
+    }
+    friend ostream& operator<< (ostream& output, const Tablica& Tablica)
+    {
+        for (int i = 0; i < Tablica.lenght; i++) {
+            output << Tablica.w[i];
+        }
+        return output;
+    }
+
+    Punkt& operator[](int element) 
+    {
+        return w[element];
+    }
+
+    bool porownaj(Tablica& array)
+    {
+        bool isEqual = false;
+        if (array.lenght != this->lenght) 
+        {
+            return isEqual;
+        }
+        for (int i = 0; i < array.lenght; i++) 
+        {
+            int isEqualPunkt = (w[i] == array.w[i]);
+            if (isEqualPunkt == 0) 
+            {
+                return isEqual;
+            };
+        }
+        isEqual = true;
+        return isEqual;
+    }
+
+    ~Tablica() 
+    {
+        delete w;
+    }
+};
+
+int main()
+{
+    Punkt test(1, 12);
+    Punkt test2(5, 18);
+    test += test2;
+    cout << test;
+    int isEqual = test == test2;
+    cout << isEqual << '\n';
+    Punkt b;
+    b = test + test2;
+    cout << b;
+    int* tabX = new int[2];
+    int* tabY = new int[2];
+    tabX[0] = 5;
+    tabX[1] = 5;
+    tabY[0] = 5;
+    tabY[1] = 5;
+    Tablica tablica1(tabX, tabY, 2);
+    Tablica tablica2(tabX, tabY, 2);
+    int isEqual2 = tablica1 == tablica2;
+    cout << isEqual2 << '\n';
+    cout << tablica1;
+    tablica1 += tablica2;
+    cout << tablica1;
+    Punkt punktcik = tablica1[1];
+    Punkt punktDoDodaniaV2(2, 2);
+    punktcik + punktDoDodaniaV2;
+    cout << punktcik;
+}
