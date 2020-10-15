@@ -1,1 +1,2 @@
-# polsl-aei-pk3-gr21-KIst
+Karol Istel
+Temat projektu: Bankomat
