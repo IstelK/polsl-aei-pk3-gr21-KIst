@@ -1,0 +1,229 @@
+/* Napisać klasę Wektor, która dziedziczy z klasy Punkt(ćw. 1).
+Klasa Wektor ma dodatkowe pola : dlugosc(sqrt(x* x + y * y)) oraz kierunek(kąt równy atan(y / x)).
+Zaimplementować odpowiednie konstruktory.Przedefiniować metody i operator ==.Napisać klasę TablicaWektorów.Zaimplementować klasę TabWektorowSort, która dziedziczy z klasy TablicaWektorów 
+i przechowuje wektory posortowane wg.długości.Napisać metodę wstaw(Wektor&), która wstawia wektor w sposób uporządkowany.Przedefiniować operator = (klasa TabWektorowSort) tak aby 
+wstawiał obiekty Wektor na odpowiednie miejsca(nie koniecznie na i - tą pozycję) .
+*/
+#include <iostream>
+#include <string>
+#include <math.h> //dodana na potrzebe zadania z laboratorium
+using namespace std;
+
+class Pracownik // klasa bazowa (czy bazowa i nadrzedna to to samo?)
+{
+    static int id;
+    int my_id;
+    string imie;
+    string nazwisko;
+    int wiek;
+    int zarobki;
+protected: //z tych danych moze sie odwolac klasa podrzedna
+
+public:
+    string nick()
+    {
+
+        return imie + nazwisko;
+    };
+    Pracownik(string imie1, string nazwisko1, string wiek1)
+    {
+        imie = imie1;
+        nazwisko = nazwisko1;
+        wiek = wiek1;
+        zarobki = 0;
+        my_id = id;
+    }
+
+void wynagrodzenie(int z=2500)
+{
+    zarobki = z;
+}
+    f()
+    {
+        static int l = 0;
+        l++;
+    }
+
+};
+static int Pracownik::id = 0;
+enum DniTygodnia(Pon, wto, sro, czw, pt);
+
+class Szef : public Pracownik
+{
+    int numer_pokoju;
+    DniTygodnia data_zebrania;
+public:
+    void zwolnij(Pracownik * p)
+    {
+        delete p;
+    }
+    Szef(string imie, string nazwisko, int wiek, int zarobki, int numer_pokoju, DniTygodnia data_zebrania):Pracownik(imie,nazwisko,wiek), numer_pokoju(np)
+    {
+        DniTygodnia data = data_zebrania;
+    }
+};
+
+// ZADANIE Z LABORATORIUM
+
+class Punkt 
+{
+public:
+    int x;
+    int y;
+    Punkt(Punkt& p) 
+    {
+        x = p.x;
+        y = p.y;
+    }
+    Punkt(int x1 = 0, int y1 = 0) 
+    {
+        x = x1;
+        y = y1;
+    }
+
+
+    void operator+=(Punkt& punkt) 
+    {
+        x = this->x + punkt.x;
+        y = this->y + punkt.y;
+    }
+    bool operator==(Punkt& punkt) 
+    {
+        if (this->x != punkt.x) 
+        {
+            return false; 
+        };
+        if (this->y != punkt.y) 
+        {
+            return false; 
+        };
+        return true;
+
+        Punkt operator+(Punkt & punkt){
+            Punkt punktToReturn;
+            punktToReturn.x = this->x + punkt.x;
+            punktToReturn.y = this->y + punkt.y;
+            return punktToReturn;
+        }
+        friend ostream& operator<< (ostream & output, const Punkt & Punkt) {
+            return output << "X = " << Punkt.x << " Y = " << Punkt.y << endl;
+        }
+    };
+
+    class Wektor : public Punkt {
+    public:
+        int dlugosc;
+        float zwrot;
+        Wektor() {
+            x = 0;
+            y = 0;
+             = 0;
+            zwrot = 0;
+        }
+        Wektor(float _x, float _y) {
+            dlugosc = ((_x * _x) + (_y * _y));
+            zwrot = atan(_x / _y);
+            x = _x;
+            y = _y;
+        }
+        friend ostream& operator<< (ostream& output, const Wektor& wek) {
+            return output << "X coordinates " << wek.x << " Y coordinates " << wek.y << '\n' << " dlugosc: " << wek.dlugosc << "zwrot " << wek.zwrot << "\n";
+        }
+        void operator+=(Wektor& wek) {
+            x = this->x + wek.x;
+            y = this->y + wek.y;
+            dlugosc += wek.dlugosc;
+            zwrot += wek.zwrot;
+        }
+        bool operator==(Wektor& wek) {
+            if (this->x != wek.x) { return false; };
+            if (this->y != wek.y) { return false; };
+            if (dlugosc != wek.dlugosc) { return false; };
+            if (zwrot != wek.zwrot) { return false; };
+            return true;
+        }
+        Wektor* operator+(Wektor& wek) {
+            this->x + wek.x;
+            this->y + wek.y;
+            this->dlugosc + wek.dlugosc;
+            this->zwrot + wek.dlugosc;
+            return this;
+        }
+
+    };
+
+    class TablicaWektorów {
+    public:
+        Wektor* arr;
+        int dlugosc;
+        TablicaWektorów(int dl = 0) {
+            dlugosc = dl;
+            arr = new Wektor[dlugosc];
+            for (int i = 0; i < dl; i++) {
+                arr[i] = Wektor(10, 10);
+            }
+        }
+        TablicaWektorów(TablicaWektorów& tab) {
+            arr = tab.arr;
+            dlugosc = tab.dlugosc;
+        }
+    };
+    class TabWektorowSort : TablicaWektorów {
+    public:
+        TabWektorowSort(TablicaWektorów& tab) {
+            dlugosc = tab.dlugosc;
+            arr = tab.arr;
+            sortowanie_babelkowe();
+        }
+
+        void sortowanie_babelkowe()
+        {
+            for (int i = 0; i < dlugosc; i++)
+                for (int j = 1; j < dlugosc - i; j++)
+                    if (arr[j - 1].dlugosc > arr[j].dlugosc) {
+                        Wektor wekto = arr[j - 1];
+                        Wektor wekto2 = arr[j];
+                        arr[j - 1] = wekto2;
+                        arr[j] = wekto;
+                    }
+        }
+        void drukuj() {
+            for (int i = 0; i < dlugosc; i++) {
+                cout << "x:" << arr[i].x << "y:" << arr[i].y << "zwrot" << arr[i].zwrot << "\n";
+            }
+        }
+        TabWektorowSort* operator=(Wektor& wektorDowstawienia) {
+            wstaw(wektorDowstawienia);
+            return this;
+        }
+        void wstaw(Wektor& newWektor) {
+            int newdlugosc = dlugosc + 1;
+            Wektor* newArr = new Wektor[newdlugosc];
+            for (int i = 0; i < dlugosc; i++) {
+                newArr[i] = arr[i];
+            }
+            newArr[newdlugosc - 1] = newWektor;
+            arr = newArr;
+            dlugosc = newdlugosc;
+    
+        }
+    };
+    int main()
+    {
+        Wektor wektor1(0, 10);
+        Wektor wektor2(1, 100);
+        TablicaWektorów Tablica(2);
+        Tablica.arr[0] = wektor1;
+        Tablica.arr[1] = wektor1;
+        TabWektorowSort tablicaDoSortowania(Tablica);
+        tablicaDoSortowania.drukuj();
+        Wektor wektor4(50, 50);
+        tablicaDoSortowania.wstaw(wektor4);
+        cout << "new arr: " << endl;
+        tablicaDoSortowania.drukuj();
+        Wektor wektor4(40, 40);
+        tablicaDoSortowania = wektor4;
+        tablicaDoSortowania.drukuj();
+    }
+
+
