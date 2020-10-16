@@ -1,0 +1,110 @@
+/* Napisać klasę Wektor, która dziedziczy z klasy Punkt(ćw. 1).
+Klasa Wektor ma dodatkowe pola : dlugosc(sqrt(x* x + y * y)) oraz kierunek(kąt równy atan(y / x)).
+Zaimplementować odpowiednie konstruktory.Przedefiniować metody i operator ==.Napisać klasę TablicaWektorów.Zaimplementować klasę TabWektorowSort, która dziedziczy z klasy TablicaWektorów 
+i przechowuje wektory posortowane wg.długości.Napisać metodę wstaw(Wektor&), która wstawia wektor w sposób uporządkowany.Przedefiniować operator = (klasa TabWektorowSort) tak aby 
+wstawiał obiekty Wektor na odpowiednie miejsca(nie koniecznie na i - tą pozycję) .
+*/
+#include <iostream>
+#include <string>
+#include <math.h> //dodana na potrzebe zadania z laboratorium
+using namespace std;
+
+class Pracownik // klasa bazowa (czy bazowa i nadrzedna to to samo?)
+{
+    static int id;
+    int my_id;
+    string imie;
+    string nazwisko;
+    int wiek;
+    int zarobki;
+protected: //z tych danych moze sie odwolac klasa podrzedna
+
+public:
+    string nick()
+    {
+
+        return imie + nazwisko;
+    };
+    Pracownik(string imie1, string nazwisko1, string wiek1)
+    {
+        imie = imie1;
+        nazwisko = nazwisko1;
+        wiek = wiek1;
+        zarobki = 0;
+        my_id = id;
+    }
+
+void wynagrodzenie(int z=2500)
+{
+    zarobki = z;
+}
+    f()
+    {
+        static int l = 0;
+        l++;
+    }
+
+};
+static int Pracownik::id = 0;
+enum DniTygodnia(Pon, wto, sro, czw, pt);
+
+class Szef : public Pracownik
+{
+    int numer_pokoju;
+    DniTygodnia data_zebrania;
+public:
+    void zwolnij(Pracownik * p)
+    {
+        delete p;
+    }
+    Szef(string imie, string nazwisko, int wiek, int zarobki, int numer_pokoju, DniTygodnia data_zebrania):Pracownik(imie,nazwisko,wiek), numer_pokoju(np)
+    {
+        DniTygodnia data = data_zebrania;
+    }
+};
+
+// ZADANIE Z LABORATORIUM
+
+class Punkt 
+{
+public:
+    int x;
+    int y;
+    Punkt(Punkt& p) 
+    {
+        x = p.x;
+        y = p.y;
+    }
+    Punkt(int x1 = 0, int y1 = 0) 
+    {
+        x = x1;
+        y = y1;
+    }
+
+
+    void operator+=(Punkt& punkt) 
+    {
+        x = this->x + punkt.x;
+        y = this->y + punkt.y;
+    }
+    bool operator==(Punkt& punkt) 
+    {
+        if (this->x != punkt.x) 
+        {
+            return false; 
+        };
+        if (this->y != punkt.y) 
+        {
+            return false; 
+        };
+        return true;
+
+
+
+
+int main(){
+    Pracownik pracownik1("Jan", "Kowalski", 30);
+
+}
+
+
